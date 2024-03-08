@@ -858,7 +858,7 @@ function GameLoop () {
         createQuestion()
         if (gameScreen()) {
             music.play(music.createSoundEffect(WaveShape.Square, 1, 3731, 255, 0, 300, SoundExpressionEffect.Warble, InterpolationCurve.Curve), music.PlaybackMode.UntilDone)
-            totalScore += info.player1.score()
+            totalScore += info.score()
         } else {
             info.changeLifeBy(-1)
             music.play(music.createSoundEffect(WaveShape.Sine, 200, 600, 255, 0, 150, SoundExpressionEffect.None, InterpolationCurve.Linear), music.PlaybackMode.UntilDone)
@@ -1099,7 +1099,7 @@ digits = ["0", "00", "000"]
 digitsselected = 0
 MainScreen("init", " ")
 game.onUpdateInterval(50, function () {
-    if (info.player1.score() > 0) {
+    if (info.score() > 0) {
         info.changeScoreBy(-50)
     }
 })

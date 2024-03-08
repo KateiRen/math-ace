@@ -2,7 +2,6 @@
 class SpriteKind:
     MenueItem = SpriteKind.create()
 
-
 def on_a_pressed():
     if gameState == 0:
         MainScreen("keypress", "A")
@@ -11,8 +10,6 @@ def on_a_pressed():
     else:
         pass
 controller.A.on_event(ControllerButtonEvent.PRESSED, on_a_pressed)
-
-
 
 def on_up_pressed():
     if gameState == 0:
@@ -673,9 +670,10 @@ def checkAndInitLeaderboard():
         blockSettings.write_number_array("00", [300, 200, 100])
         blockSettings.write_number_array("000", [300, 200, 100])
     getLeaderboard()
+# verhindert den Standard-Dialog bei Spielende
 
 def on_life_zero():
-    pass #verhindert den Standard-Dialog bei Spielende
+    pass
 info.on_life_zero(on_life_zero)
 
 def getLeaderboard():
@@ -854,7 +852,7 @@ def GameLoop():
                     SoundExpressionEffect.WARBLE,
                     InterpolationCurve.CURVE),
                 music.PlaybackMode.UNTIL_DONE)
-            totalScore += info.player1.score()
+            totalScore += info.score()
         else:
             info.change_life_by(-1)
             music.play(music.create_sound_effect(WaveShape.SINE,
@@ -1088,6 +1086,6 @@ digitsselected = 0
 MainScreen("init", " ")
 
 def on_update_interval():
-    if info.player1.score() > 0:
+    if info.score() > 0:
         info.change_score_by(-50)
 game.on_update_interval(50, on_update_interval)
