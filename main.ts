@@ -1,7 +1,15 @@
 namespace SpriteKind {
     export const MenueItem = SpriteKind.create()
 }
-// ToDo's
+controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (gameState == 0) {
+        MainScreen("keypress", "A")
+    } else if (gameState == 1) {
+        OptionsScreen("keypress", "A")
+    } else {
+    	
+    }
+})
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     if (gameState == 0) {
         MainScreen("keypress", "UP")
@@ -71,19 +79,19 @@ function randomize (a: number, b: number, c: number, op: string) {
     responses[5] = responses[1]
     responses[6] = responses[2]
 }
-controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (gameState == 0) {
-        MainScreen("keypress", "A")
-    } else if (gameState == 1) {
-        OptionsScreen("keypress", "A")
-    } else {
-    	
-    }
-})
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     if (gameState == 1) {
         OptionsScreen("keypress", "LEFT")
     } else if (false) {
+    	
+    }
+})
+controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (gameState == 0) {
+        MainScreen("keypress", "DOWN")
+    } else if (gameState == 1) {
+        OptionsScreen("keypress", "DOWN")
+    } else {
     	
     }
 })
@@ -682,14 +690,9 @@ function checkAndInitLeaderboard () {
     }
     getLeaderboard()
 }
-controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (gameState == 0) {
-        MainScreen("keypress", "DOWN")
-    } else if (gameState == 1) {
-        OptionsScreen("keypress", "DOWN")
-    } else {
-    	
-    }
+// verhindert den Standard-Dialog bei Spielende
+info.onLifeZero(function () {
+	
 })
 function getLeaderboard () {
     if (digitsselected == 0) {
@@ -850,7 +853,7 @@ function GameLoop () {
         `)
     totalScore = 0
     info.setLife(5)
-    for (let index = 0; index < 10; index++) {
+    for (let index = 0; index < 3; index++) {
         info.setScore(20000)
         createQuestion()
         if (gameScreen()) {
@@ -865,6 +868,8 @@ function GameLoop () {
     checkHighScore()
     showLeaderboard()
     gameState = 0
+    info.setScore(0)
+    info.setLife(0)
     MainScreen("init", " ")
 }
 function setLeaderboard () {
