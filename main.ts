@@ -648,21 +648,27 @@ function MainScreen (state2: string, key2: string) {
 }
 function showLeaderboard () {
     getLeaderboard()
-    leaderboard = "Bestenliste:" + "\\n" + "Schwierigkeit: "
+    leaderboard = "Bestenliste:" + "\\n" + "Schwierigkeit = "
     leaderboard = "" + leaderboard + "" + digits[digitsselected] + "\\n \\n"
     luecke = ""
-    // for index in range(16 - len(("" + leaders_names[0] + convert_to_text(leaders_scores[0])))):
-    // luecke = "" + luecke + " "
+    laenge = leaders_names[0].length + convertToText(leaders_scores[0]).length
+    for (let index = 0; index < 16 - laenge; index++) {
+        luecke = "" + luecke + " "
+    }
     leaderboard = "" + leaderboard + leaders_names[0] + luecke + convertToText(leaders_scores[0])
     leaderboard = "" + leaderboard + "\\n"
     luecke = ""
-    // for index2 in range(16 - len(("" + leaders_names[1] + convert_to_text(leaders_scores[1])))):
-    // luecke = "" + luecke + " "
+    laenge = leaders_names[1].length + convertToText(leaders_scores[1]).length
+    for (let index = 0; index < 16 - laenge; index++) {
+        luecke = "" + luecke + " "
+    }
     leaderboard = "" + leaderboard + leaders_names[1] + luecke + convertToText(leaders_scores[1])
     leaderboard = "" + leaderboard + "\\n"
     luecke = ""
-    // for index3 in range(16 - len(("" + leaders_names[2] + convert_to_text(leaders_scores[2])))):
-    // luecke = "" + luecke + " "
+    laenge = leaders_names[2].length + convertToText(leaders_scores[2]).length
+    for (let index = 0; index < 16 - laenge; index++) {
+        luecke = "" + luecke + " "
+    }
     leaderboard = "" + leaderboard + leaders_names[2] + luecke + convertToText(leaders_scores[2])
     game.showLongText(leaderboard, DialogLayout.Full)
 }
@@ -1053,6 +1059,7 @@ let name = ""
 let totalScore = 0
 let leaders_scores: number[] = []
 let leaders_names: string[] = []
+let laenge = 0
 let luecke = ""
 let leaderboard = ""
 let buffer = 0

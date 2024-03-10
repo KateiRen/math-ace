@@ -633,18 +633,21 @@ def showLeaderboard():
     leaderboard = "Bestenliste:" + "\\n" + "Schwierigkeit: "
     leaderboard = "" + leaderboard + "" + digits[digitsselected] + "\\n \\n"
     luecke = ""
-    # for index in range(16 - len(("" + leaders_names[0] + convert_to_text(leaders_scores[0])))):
-    # luecke = "" + luecke + " "
+    laenge = len(leaders_names[0]) + len(convert_to_text(leaders_scores[0]))
+    for index in range(16 - laenge):
+        luecke = "" + luecke + " "
     leaderboard = "" + leaderboard + leaders_names[0] + luecke + convert_to_text(leaders_scores[0])
     leaderboard = "" + leaderboard + "\\n"
     luecke = ""
-    # for index2 in range(16 - len(("" + leaders_names[1] + convert_to_text(leaders_scores[1])))):
-    # luecke = "" + luecke + " "
+    laenge = len(leaders_names[1]) + len(convert_to_text(leaders_scores[1]))
+    for index2 in range(16 - laenge):
+        luecke = "" + luecke + " "
     leaderboard = "" + leaderboard + leaders_names[1] + luecke + convert_to_text(leaders_scores[1])
     leaderboard = "" + leaderboard + "\\n"
     luecke = ""
-    # for index3 in range(16 - len(("" + leaders_names[2] + convert_to_text(leaders_scores[2])))):
-    # luecke = "" + luecke + " "
+    laenge = len(leaders_names[2]) + len(convert_to_text(leaders_scores[2]))
+    for index3 in range(16 - laenge):
+        luecke = "" + luecke + " "
     leaderboard = "" + leaderboard + leaders_names[2] + luecke + convert_to_text(leaders_scores[2])
     game.show_long_text(leaderboard, DialogLayout.FULL)
 
