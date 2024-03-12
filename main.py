@@ -21,7 +21,7 @@ def on_up_pressed():
 controller.up.on_event(ControllerButtonEvent.PRESSED, on_up_pressed)
 
 def createQuestion():
-    global operation, limit, f, e, d
+    global operation, limit, j, h, g, ___tempvar5
     operation = randint(0, 3)
     while operations[operation] == -1:
         operation = randint(0, 3)
@@ -32,29 +32,35 @@ def createQuestion():
     else:
         limit = 999
     if operation == 0:
-        f = randint(0, limit)
-        e = randint(0, limit)
-        d = f + e
-        randomize(f, e, d, "+")
+        j = randint(1, limit)
+        h = randint(1, limit)
+        g = j + h
+        randomize(j, h, g, "+")
     elif operation == 1:
-        f = randint(0, limit)
-        e = randint(0, limit)
-        d = f - e
-        randomize(f, e, d, "-")
+        j = randint(1, limit)
+        h = randint(1, limit)
+        if True:
+            # might become an additional option to prevent / allow negative results
+            if h > j:
+                ___tempvar5 = [h, j]
+                j = ___tempvar5[0]
+                h = ___tempvar5[1]
+        g = j - h
+        randomize(j, h, g, "-")
     elif operation == 2:
-        f = randint(1, limit)
-        e = randint(1, limit)
-        d = f * e
-        randomize(f, e, d, "*")
+        j = randint(1, limit)
+        h = randint(1, limit)
+        g = j * h
+        randomize(j, h, g, "*")
     else:
-        f = randint(1, limit * 11)
-        e = randint(1, limit)
-        d = f / e
-        while f % e != 0:
-            f = randint(1, limit * 11)
-            e = randint(1, limit)
-            d = f / e
-        randomize(f, e, d, "/")
+        j = randint(1, limit * 11)
+        h = randint(1, limit)
+        g = j / h
+        while j % h != 0:
+            j = randint(1, limit * 11)
+            h = randint(1, limit)
+            g = j / h
+        randomize(j, h, g, "/")
 def randomize(a: number, b: number, c: number, op: str):
     global i
     i = randint(0, 2)
@@ -70,9 +76,16 @@ def randomize(a: number, b: number, c: number, op: str):
         responses[7] = "" + str(a) + op + ("" + str(b)) + "=" + "?"
         responses[0] = convert_to_text(c)
         responses[4] = convert_to_text(c)
-    responses[1] = convert_to_text(randint(0, limit))
-    responses[2] = convert_to_text(randint(0, limit))
-    responses[3] = convert_to_text(randint(0, limit))
+    a = randint(1, int(responses[0]) * 2)
+    b = randint(int(responses[0]), int(responses[0]) * 2)
+    c = randint(int(responses[0]), int(responses[0]) * 2)
+    while a == b or b == c or c == a:
+        a = randint(1, int(responses[0]) * 2)
+        b = randint(int(responses[0]), int(responses[0]) * 3)
+        c = randint(int(responses[0]), int(responses[0]) * 4)
+    responses[1] = convert_to_text(a)
+    responses[2] = convert_to_text(b)
+    responses[3] = convert_to_text(c)
     responses[5] = responses[1]
     responses[6] = responses[2]
 
@@ -628,9 +641,9 @@ def MainScreen(state2: str, key2: str):
     else:
         pass
 def showLeaderboard():
-    global leaderboard, luecke
+    global leaderboard, luecke, laenge
     getLeaderboard()
-    leaderboard = "Bestenliste:" + "\\n" + "Schwierigkeit: "
+    leaderboard = "Bestenliste:" + "\\n" + "Schwierigkeit = "
     leaderboard = "" + leaderboard + "" + digits[digitsselected] + "\\n \\n"
     luecke = ""
     laenge = len(leaders_names[0]) + len(convert_to_text(leaders_scores[0]))
@@ -842,9 +855,9 @@ def GameLoop():
     """))
     totalScore = 0
     info.set_life(5)
-    for index in range(3):
-        info.set_score(20000)
+    for index4 in range(3):
         createQuestion()
+        info.set_score(difficulty())
         if gameScreen():
             music.play(music.create_sound_effect(WaveShape.SQUARE,
                     1,
@@ -875,6 +888,10 @@ def GameLoop():
     info.set_score(0)
     info.set_life(0)
     MainScreen("init", " ")
+def difficulty():
+    a = (operation +1 ) * 2 # 2, 4, 6, 8
+    b  =(digitsselected +1 ) * 2 # 2, 4, 6
+    return a*b*10000
 def setLeaderboard():
     if digitsselected == 0:
         blockSettings.write_string("0_1_name", leaders_names[0])
@@ -1052,6 +1069,7 @@ name = ""
 totalScore = 0
 leaders_scores: List[number] = []
 leaders_names: List[str] = []
+laenge = 0
 luecke = ""
 leaderboard = ""
 buffer = 0
@@ -1068,11 +1086,15 @@ response2: TextSprite = None
 response1: TextSprite = None
 rndIndex = 0
 equation: TextSprite = None
-responses: List[str] = []
-i = 0
 d = 0
 e = 0
 f = 0
+responses: List[str] = []
+i = 0
+___tempvar5: List[number] = []
+g = 0
+h = 0
+j = 0
 limit = 0
 operation = 0
 digitsselected = 0

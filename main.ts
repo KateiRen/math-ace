@@ -32,30 +32,38 @@ function createQuestion () {
         limit = 999
     }
     if (operation == 0) {
-        f = randint(0, limit)
-        e = randint(0, limit)
-        d = f + e
-        randomize(f, e, d, "+")
+        j = randint(1, limit)
+        h = randint(1, limit)
+        g = j + h
+        randomize(j, h, g, "+")
     } else if (operation == 1) {
-        f = randint(0, limit)
-        e = randint(0, limit)
-        d = f - e
-        randomize(f, e, d, "-")
-    } else if (operation == 2) {
-        f = randint(1, limit)
-        e = randint(1, limit)
-        d = f * e
-        randomize(f, e, d, "*")
-    } else {
-        f = randint(1, limit * 11)
-        e = randint(1, limit)
-        d = f / e
-        while (f % e != 0) {
-            f = randint(1, limit * 11)
-            e = randint(1, limit)
-            d = f / e
+        j = randint(1, limit)
+        h = randint(1, limit)
+        if (true) {
+            // might become an additional option to prevent / allow negative results
+            if (h > j) {
+                ___tempvar5 = [h, j]
+                j = ___tempvar5[0]
+                h = ___tempvar5[1]
+            }
         }
-        randomize(f, e, d, "/")
+        g = j - h
+        randomize(j, h, g, "-")
+    } else if (operation == 2) {
+        j = randint(1, limit)
+        h = randint(1, limit)
+        g = j * h
+        randomize(j, h, g, "*")
+    } else {
+        j = randint(1, limit * 11)
+        h = randint(1, limit)
+        g = j / h
+        while (j % h != 0) {
+            j = randint(1, limit * 11)
+            h = randint(1, limit)
+            g = j / h
+        }
+        randomize(j, h, g, "/")
     }
 }
 function randomize (a: number, b: number, c: number, op: string) {
@@ -73,9 +81,17 @@ function randomize (a: number, b: number, c: number, op: string) {
         responses[0] = convertToText(c)
         responses[4] = convertToText(c)
     }
-    responses[1] = convertToText(randint(0, limit))
-    responses[2] = convertToText(randint(0, limit))
-    responses[3] = convertToText(randint(0, limit))
+    a = randint(1, parseInt(responses[0]) * 2)
+    b = randint(parseInt(responses[0]), parseInt(responses[0]) * 2)
+    c = randint(parseInt(responses[0]), parseInt(responses[0]) * 2)
+    while (a == b || b == c || c == a) {
+        a = randint(1, parseInt(responses[0]) * 2)
+        b = randint(parseInt(responses[0]), parseInt(responses[0]) * 3)
+        c = randint(parseInt(responses[0]), parseInt(responses[0]) * 4)
+    }
+    responses[1] = convertToText(a)
+    responses[2] = convertToText(b)
+    responses[3] = convertToText(c)
     responses[5] = responses[1]
     responses[6] = responses[2]
 }
@@ -860,8 +876,8 @@ function GameLoop () {
     totalScore = 0
     info.setLife(5)
     for (let index = 0; index < 3; index++) {
-        info.setScore(20000)
         createQuestion()
+        info.setScore(difficulty())
         if (gameScreen()) {
             music.play(music.createSoundEffect(WaveShape.Square, 1, 3731, 255, 0, 300, SoundExpressionEffect.Warble, InterpolationCurve.Curve), music.PlaybackMode.UntilDone)
             totalScore += info.score()
@@ -877,6 +893,13 @@ function GameLoop () {
     info.setScore(0)
     info.setLife(0)
     MainScreen("init", " ")
+}
+function difficulty () {
+    a = (operation + 1) * 2
+    // 2, 4, 6, 8
+    b = (digitsselected + 1) * 2
+    // 2, 4, 6
+    return a * b * 10000
 }
 function setLeaderboard () {
     if (digitsselected == 0) {
@@ -1076,11 +1099,15 @@ let response2: TextSprite = null
 let response1: TextSprite = null
 let rndIndex = 0
 let equation: TextSprite = null
+let c = 0
+let b = 0
+let a = 0
 let responses: string[] = []
 let i = 0
-let d = 0
-let e = 0
-let f = 0
+let ___tempvar5: number[] = []
+let g = 0
+let h = 0
+let j = 0
 let limit = 0
 let operation = 0
 let digitsselected = 0
@@ -1088,6 +1115,9 @@ let digits: string[] = []
 let operations: number[] = []
 let yPositions: number[] = []
 let gameState = 0
+let f = 0
+let e = 0
+let d = 0
 checkAndInitLeaderboard()
 gameState = 0
 yPositions = [
